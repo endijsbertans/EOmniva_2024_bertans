@@ -11,10 +11,14 @@ public  abstract class AbstractCustomer{
     private ArrayList<Parcel> parcels = new ArrayList<Parcel>();
     private static long counter = 0;
     AbstractCustomer(){
-
+        setcID();
+        setAddress(null);
+        setPhoneNo(null);
     }
     AbstractCustomer(Address address, String phoneNo){
-
+        setcID();
+        setAddress(address);
+        setPhoneNo(phoneNo);
     }
 
     public long getcID() {
@@ -44,7 +48,6 @@ public  abstract class AbstractCustomer{
         else
             this.phoneNo = "2XXXXXXX";
     }
-
     public ArrayList<Parcel> getParcels() {
         return parcels;
     }
