@@ -1,15 +1,17 @@
 package model;
 
 public class CustomerAsPerson extends AbstractCustomerAsPerson {
-    CustomerAsPerson(){
+    public CustomerAsPerson(){
         super();
+        setCustomerCode();
     }
-    CustomerAsPerson(String name, String surname, String personCode, Address address, String phone){
-        super();
+    public CustomerAsPerson(String name, String surname, String personCode, Address address, String phone){
+        super(name, surname, personCode, address, phone);
+        setCustomerCode();
     }
     @Override
-    public void setCustomerCode(String customerCode) {
-        setCustomerCode(getcID() + "_person_"+ person.getPersonCode());
+    public void setCustomerCode() {
+        super.customerCode = getcID() + "_person_"+ person.getPersonCode();
     }
 
     @Override

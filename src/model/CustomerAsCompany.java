@@ -3,12 +3,18 @@ package model;
 public class CustomerAsCompany extends AbstractCustomer{
     private String title;
     private String companyRegNo;
-    CustomerAsCompany(){
+    public CustomerAsCompany(){
         super();
+        setTitle(null);
+        setCompanyRegNo(null);
+        setCustomerCode();
     }
 
-    CustomerAsCompany(Address address, String phone,String title, String companyRegNo){
+    public CustomerAsCompany(Address address, String phone,String title, String companyRegNo){
         super();
+        setTitle(title);
+        setCompanyRegNo(companyRegNo);
+        setCustomerCode();
     }
 
     public String getTitle() {
@@ -28,7 +34,11 @@ public class CustomerAsCompany extends AbstractCustomer{
     }
 
     public void setCompanyRegNo(String companyRegNo) {
-        this.companyRegNo = companyRegNo;
+        if(title != null &&
+                title.matches("\\d{11}"))
+            this.companyRegNo = companyRegNo;
+        else
+            this.companyRegNo = "12345678";
     }
 
     @Override
@@ -42,7 +52,7 @@ public class CustomerAsCompany extends AbstractCustomer{
     }
 
     @Override
-    public void setCustomerCode(String customerCode) {
-        setCustomerCode(getcID() + "_person_" + companyRegNo);
+    public void setCustomerCode() {
+        super.customerCode  = getcID() + "_person_" + companyRegNo;
     }
 }

@@ -4,12 +4,12 @@ public class Person {
     private String name;
     private String surname;
     private String personCode;
-    Person(){
+    public Person(){
         setName(null);
         setSurname(null);
         setPersonCode(null);
     }
-    Person(String name, String surname, String personCode){
+    public Person(String name, String surname, String personCode){
         setName(name);
         setSurname(surname);
         setPersonCode(personCode);

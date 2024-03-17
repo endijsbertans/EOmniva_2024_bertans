@@ -1,7 +1,6 @@
 package service;
 
-import model.AbstractCustomer;
-import model.Driver;
+import model.*;
 
 import java.util.ArrayList;
 
@@ -12,5 +11,9 @@ public class MainService {
     public static void main(String[] args) {
         Driver d1 = new Driver();
         System.out.println(d1);
+        CustomerAsPerson cust1 = new CustomerAsPerson();
+        System.out.println(cust1);
+        CustomerAsCompany cust2 = new CustomerAsCompany();
+        System.out.println(cust2);
     }
 }

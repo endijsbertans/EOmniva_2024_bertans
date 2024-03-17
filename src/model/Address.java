@@ -5,12 +5,12 @@ public class Address {
     private String streetOrHouseTitle;
     private int houseNo;
 
-    Address(){
+    public Address(){
         setCity(City.notSet);
         setStreetOrHouseTitle(null);
         setHouseNo(-1);
     }
-    Address(City city, String streetOrHouseTitle, int houseNo){
+    public Address(City city, String streetOrHouseTitle, int houseNo){
         setCity(city);
         setStreetOrHouseTitle(streetOrHouseTitle);
         setHouseNo(houseNo);
@@ -20,7 +20,10 @@ public class Address {
     }
 
     public void setCity(City city) {
-        this.city = city;
+        if(city != null)
+            this.city = city;
+        else
+            this.city = city.notSet;
     }
 
     public String getStreetOrHouseTitle() {

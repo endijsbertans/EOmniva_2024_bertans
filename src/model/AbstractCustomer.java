@@ -7,12 +7,12 @@ public  abstract class AbstractCustomer{
     private long cID;
     private Address address;
     private String phoneNo;
-    private String customerCode;
+    protected String customerCode;
     private ArrayList<Parcel> parcels = new ArrayList<Parcel>();
     private static long counter = 0;
     AbstractCustomer(){
         setcID();
-        setAddress(null);
+        setAddress(new Address());
         setPhoneNo(null);
     }
     AbstractCustomer(Address address, String phoneNo){
@@ -34,7 +34,7 @@ public  abstract class AbstractCustomer{
     }
 
     public void setAddress(Address address) {
-        this.address = address;
+        this.address = new Address(address.getCity(), address.getStreetOrHouseTitle(), address.getHouseNo());
     }
 
     public String getPhoneNo() {
@@ -55,7 +55,7 @@ public  abstract class AbstractCustomer{
     public void setParcels(ArrayList<Parcel> parcels) {
         this.parcels = parcels;
     }
-    public abstract void setCustomerCode(String customerCode);
+    public abstract void setCustomerCode();
     public String getCustomerCode(){
         return customerCode;
     }
@@ -71,7 +71,6 @@ public  abstract class AbstractCustomer{
                 "cID=" + cID +
                 ", address=" + address +
                 ", phoneNo='" + phoneNo + '\'' +
-                ", customerCode='" + customerCode + '\'' +
                 ", parcels=" + parcels +
                 '}';
     }
