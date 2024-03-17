@@ -21,7 +21,7 @@ public class Person {
 
     public void setName(String name) {
         if(name != null &&
-                name.matches("[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]"))
+                name.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+"))
             this.name = name;
         else
             this.name = "----";
@@ -33,7 +33,7 @@ public class Person {
 
     public void setSurname(String surname) {
         if(surname != null &&
-                surname.matches("[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]"))
+                surname.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+"))
             this.surname = surname;
         else
             this.surname = "----";

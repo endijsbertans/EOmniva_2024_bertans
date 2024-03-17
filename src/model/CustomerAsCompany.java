@@ -11,7 +11,7 @@ public class CustomerAsCompany extends AbstractCustomer{
     }
 
     public CustomerAsCompany(Address address, String phone,String title, String companyRegNo){
-        super();
+        super(address, phone);
         setTitle(title);
         setCompanyRegNo(companyRegNo);
         setCustomerCode();
@@ -22,8 +22,7 @@ public class CustomerAsCompany extends AbstractCustomer{
     }
 
     public void setTitle(String title) {
-        if(title != null &&
-                title.matches("[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]"))
+        if(title != null && title.length() < 30)
             this.title = title;
         else
             this.title = "---";

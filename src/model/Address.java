@@ -32,7 +32,7 @@ public class Address {
 
     public void setStreetOrHouseTitle(String streetOrHouseTitle) {
         if(streetOrHouseTitle != null &&
-                streetOrHouseTitle.matches("[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]"))
+                streetOrHouseTitle.matches("[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]+"))
             this.streetOrHouseTitle = streetOrHouseTitle;
         else
             this.streetOrHouseTitle = "---";
