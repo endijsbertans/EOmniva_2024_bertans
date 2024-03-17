@@ -1,7 +1,7 @@
 package model;
 import model.Person;
-public abstract class AbstractCustomerAsPerson extends AbstractCustomer{
-    private Person person;
+public abstract class AbstractCustomerAsPerson extends AbstractCustomer {
+    protected Person person;
     AbstractCustomerAsPerson(){
         super();
         new Person();
@@ -13,7 +13,8 @@ public abstract class AbstractCustomerAsPerson extends AbstractCustomer{
 
     @Override
     public String toString() {
-        return "AbstractCustomerAsPerson{" +
+        return   super.toString() +
+                "AbstractCustomerAsPerson{" +
                 "person=" + person +
                 '}';
     }

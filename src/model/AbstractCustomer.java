@@ -56,6 +56,9 @@ public  abstract class AbstractCustomer{
         this.parcels = parcels;
     }
     public abstract void setCustomerCode(String customerCode);
+    public String getCustomerCode(){
+        return customerCode;
+    }
     public void addNewParcel(Parcel parcel){
         if(!parcels.contains(parcel))
             parcels.add(parcel);

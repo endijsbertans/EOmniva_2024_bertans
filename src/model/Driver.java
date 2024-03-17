@@ -5,13 +5,13 @@ public class Driver extends Person{
     private String licenseNo;
     private float experienceInYears;
     private static long counter = 0;
-    Driver(){
+    public Driver(){
         super();
         setdID();
         setLicenseNo(null);
         setExperienceInYears(-1);
     }
-    Driver(String name, String surname, String personCode, String licenseNo, float experienceInYears){
+    public Driver(String name, String surname, String personCode, String licenseNo, float experienceInYears){
         super(name, surname, personCode);
         setdID();
         setLicenseNo(licenseNo);
@@ -51,7 +51,7 @@ public class Driver extends Person{
 
     @Override
     public String toString() {
-        return "super() + " +
+        return     super.toString() +
                 "Driver{" +
                 "dID=" + dID +
                 ", licenseNo='" + licenseNo + '\'' +

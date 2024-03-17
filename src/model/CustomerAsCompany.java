@@ -33,9 +33,11 @@ public class CustomerAsCompany extends AbstractCustomer{
 
     @Override
     public String toString() {
-        return "CustomerAsCompany{" +
+        return  super.toString() +
+                "CustomerAsCompany{" +
                 "title='" + title + '\'' +
                 ", companyRegNo='" + companyRegNo + '\'' +
+                ", CustomerCode='" + getCustomerCode() + '\'' +
                 '}';
     }
 
