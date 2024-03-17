@@ -9,11 +9,21 @@ public class Parcel {
     private float price;
     private boolean isFragile;
     private Driver driver;
-    Parcel(){
-
+    public Parcel(){
+        setOrderCreated();
+        setPlannedDelivery(LocalDateTime.now().plusDays(1));
+        setSize(ParcelSize.S);
+        setPrice();
+        setFragile(false);
+        setDriver(new Driver());
     }
-    Parcel(LocalDateTime orderCreated, LocalDateTime plannedDelivery, ParcelSize size, float price, boolean isFragile, Driver driver){
-
+    public Parcel(ParcelSize size, boolean isFragile, Driver driver){
+        setOrderCreated();
+        setPlannedDelivery(LocalDateTime.now().plusDays(1));
+        setSize(size);
+        setPrice();
+        setFragile(isFragile);
+        setDriver(driver);
     }
 
     public LocalDateTime getOrderCreated() {

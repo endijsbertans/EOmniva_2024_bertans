@@ -21,5 +21,10 @@ public class MainService {
         System.out.println(cust3);
         CustomerAsCompany cust4 = new CustomerAsCompany(new Address(City.Liepaja, "Talsu", 14), "29666117", "SIA Labais", "321456-21656");
         System.out.println(cust4);
+        // Parcel(ParcelSize size, boolean isFragile, Driver driver){
+        Parcel pckg1 = new Parcel();
+        System.out.println(pckg1);
+        Parcel pckg2 = new Parcel(ParcelSize.M, true, d2);
+        System.out.println(pckg2);
     }
 }
