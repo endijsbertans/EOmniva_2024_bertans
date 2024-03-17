@@ -1,5 +1,5 @@
 package model;
 
 public enum City {
-    Ventspils, Liepaja, Jelgava, Daugavpils
+    Ventspils, Liepaja, Jelgava, Daugavpils, notSet
 }
