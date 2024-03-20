@@ -17,9 +17,9 @@ public class Parcel {
         setFragile(false);
         setDriver(new Driver());
     }
-    public Parcel(ParcelSize size, boolean isFragile, Driver driver){
+    public Parcel(LocalDateTime PlannedDelivery, ParcelSize size, boolean isFragile, Driver driver){
         setOrderCreated();
-        setPlannedDelivery(LocalDateTime.now().plusDays(1));
+        setPlannedDelivery(PlannedDelivery);
         setSize(size);
         setPrice();
         setFragile(isFragile);
@@ -37,9 +37,9 @@ public class Parcel {
     public LocalDateTime getPlannedDelivery() {
         return plannedDelivery;
     }
-    // TODO  make a check for minimum delivery time 1 day
+
     public void setPlannedDelivery(LocalDateTime plannedDelivery) {
-        if(plannedDelivery.isAfter(LocalDateTime.now()))
+        if(plannedDelivery.isAfter(LocalDateTime.now()) && LocalDateTime.now().plusDays(1).isBefore(plannedDelivery))
             this.plannedDelivery = plannedDelivery;
         else
             this.plannedDelivery = LocalDateTime.now();
