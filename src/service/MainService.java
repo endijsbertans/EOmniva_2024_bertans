@@ -4,6 +4,7 @@ import model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainService {
     private static ArrayList<Driver> allDrivers =  new ArrayList<Driver>();
@@ -26,11 +27,51 @@ public class MainService {
         System.out.println(pckg1);
         Parcel pckg2 = new Parcel(LocalDateTime.now().plusDays(2), ParcelSize.M, true, d2);
         System.out.println(pckg2);
-    }
+
+        System.out.println("-------------------------------");
+
+            // TESTS OF FUNCTIONS
+            try {
+
+
+
+                addDriver("John", "Doe", "123456-12345", "AF12122", 2);
+                System.out.println("added driver searched with GETDRIVERBYPERSONCODE: " + getDriverByPersonCode("123456-12345"));
+
+                editLicenseNobyPersonCode("123456-12345", "AF12123");
+                System.out.println("edited license 123456-12345, AF12123" + getDriverByPersonCode("123456-12345"));
+
+                editExperienceInYearsByPersonCode("123456-12345", 3);
+                System.out.println("editExperienceInYearsByPersonCode from 2 to 3 got: " + getDriverByPersonCode("123456-12345").getExperienceInYears());
+
+                AllCustomers.add(generateCustomerAsPersonAndParcel());
+                System.out.println("addCustomerAsPerson: " + AllCustomers.getLast());
+
+                AllCustomers.add(generateCustomerAsCompanyAndParcel());
+                System.out.println("addCustomerAsCompany: " + AllCustomers.getLast());
+
+                AbstractCustomer customer = getCustomerByCustomerCode("5_person_12345678");
+                System.out.println("getCustomerByCustomerCode, got: " + customer);
+
+                ArrayList<Parcel> parcels = getAllParcelsByCustomerCode("5_person_12345678");
+                System.out.println("getAllParcelsByCustomerCode, got: " + parcels.size() + " parcels");
+
+                float price = calculatePriceOfAllCustomerParcelsByCustomerCode("5_person_12345678");
+                System.out.println("calculatePriceOfAllCustomerParcelsByCustomerCode, total price: " + price);
+
+                int[] sizes = getStatisticsOfCustomerParcelSizesByCustomerCode("5_person_12345678");
+                System.out.println("getStatisticsOfCustomerParcelSizesByCustomerCode, sizes: " + Arrays.toString(sizes));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
     // start of driver CRUD
     public static void addDriver(String name, String surname, String personCode, String licenseNo, float experienceInYears) throws Exception {
-        if(name == null || name.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+")
-        || surname == null || surname.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+")
+        if(name == null || !name.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+")
+        || surname == null || !surname.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+")
         || personCode == null || !personCode.matches("\\d{5,6}-\\d{5}")
         || licenseNo == null || !licenseNo.matches("[A]{1}[F]{1}\\d{5,7}")
         || experienceInYears < 0 || experienceInYears > 99)
@@ -64,19 +105,19 @@ public class MainService {
     // start of customer CRUD
     public static void addCustomerAsPerson(String name, String surname, String personCode, Address address, String phone) throws Exception {
 
-        if(name == null || name.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+")
-        || surname == null || surname.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+")
+        if(name == null || !name.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+")
+        || surname == null || !surname.matches("[A-ZĒŪĪĻĶĢŠĀČŅ][a-zēūīļķģšāžčņ]+")
         || personCode == null || !personCode.matches("\\d{5,6}-\\d{5}")
         || address == null || address.getCity() == City.notSet
-        || phone == null || phone.matches("2\\d{7}"))
+        || phone == null || !phone.matches("2\\d{7}"))
             throw new Exception("Invalid input parameters for customer");
         CustomerAsPerson temp = new CustomerAsPerson(name, surname, personCode, address, phone);
         AllCustomers.add(temp);
     }
     public static void addCustomerAsCompany(City city, String streetOrHouseTitle, int houseNo, String phone, String title, String companyRegNo) throws Exception {
         if(city == City.notSet
-        || streetOrHouseTitle == null || !streetOrHouseTitle.matches("[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]+")
-        || houseNo < 1
+        || streetOrHouseTitle == null || streetOrHouseTitle.length() > 50
+        || houseNo < 0
         || phone == null || !phone.matches("2\\d{7}")
         || title == null
         || companyRegNo == null || !companyRegNo.matches("\\d{11}"))
@@ -200,7 +241,7 @@ public class MainService {
         }
         return count;
     }
-    public static void generateCustomerAsPersonAndParcel(){
+    public static AbstractCustomer generateCustomerAsPersonAndParcel() throws Exception {
         Driver driverTest = new Driver("Janis", "Berzins", "123456-12345", "AF12122", 2);
         String[] names = new String[]{"Janis", "Peteris", "Andris", "Juris", "Guntis", "Aigars", "Kaspars", "Valdis", "Voldemars", "Vilnis"};
         String[] surnames = new String[]{"Berzins", "Ozolins", "Liepins", "Kalnins", "Sprogis", "Krumins", "Vitols", "Vilks", "Kakis", "Kakis"};
@@ -218,12 +259,33 @@ public class MainService {
         }
             try {
                 CustomerAsPerson customer = new CustomerAsPerson(names[randoms[0]], surnames[randoms[1]], personCodes[randoms[2]], new Address(cities[randoms[4]], streetOrHouseTitle[randoms[5]], randoms[6]), phone[randoms[3]]);
-                AllCustomers.add(customer);
                 customer.addNewParcel(new Parcel(LocalDateTime.now().plusDays(randoms[3]), sizes[randoms[0]], isFragile[randoms[1]], driverTest));
+                return customer;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            // ahj vso galva jau saopp
+            throw new Exception("Could not generate customer");
     }
-
+    public static AbstractCustomer generateCustomerAsCompanyAndParcel() throws Exception {
+        Driver driverTest = new Driver("Janis", "Berzins", "123456-12345", "AF12122", 2);
+        String[] titles = new String[]{"SIA Labais", "SIA Labais2", "SIA Labais3", "SIA Labais4", "SIA Labais5", "SIA Labais6", "SIA Labais7", "SIA Labais8", "SIA Labais9", "SIA Labais10"};
+        String[] companyRegNo = new String[]{"321456-21656", "321456-21657", "321456-21658", "321456-21659", "321456-21660", "321456-21661", "321456-21662", "321456-21663", "321456-21664", "321456-21665"};
+        String[] phone = new String[]{"29666117", "29666118", "29666119", "29666120", "29666121", "29666122", "29666123", "29666124", "29666125", "29666126"};
+        City[] cities = new City[]{City.Jelgava, City.Ventspils, City.Liepaja, City.Daugavpils, City.Jelgava, City.Ventspils, City.Liepaja, City.Daugavpils, City.Jelgava, City.Ventspils, };
+        String[] streetOrHouseTitle = new String[]{"Brivibas", "Rigas", "Talsu", "Kurzemes", "Brivibas", "Rigas", "Talsu", "Kurzemes", "Brivibas", "Rigas"};
+        ParcelSize[] sizes = new ParcelSize[]{ParcelSize.X, ParcelSize.S, ParcelSize.M, ParcelSize.L, ParcelSize.XL,ParcelSize.X, ParcelSize.S, ParcelSize.M, ParcelSize.L, ParcelSize.XL};
+        boolean[] isFragile = new boolean[]{true, false, true, false, true, false, true, false, true, false};
+        int[] randoms = new int[7];
+        for(int i = 0; i < randoms.length; i++){
+            randoms[i] = (int)(Math.random() * 10);
+        }
+        try {
+            CustomerAsCompany customer = new CustomerAsCompany(new Address(cities[randoms[4]], streetOrHouseTitle[randoms[5]], randoms[6]), phone[randoms[3]], titles[randoms[0]], companyRegNo[randoms[2]]);
+            customer.addNewParcel(new Parcel(LocalDateTime.now().plusDays(randoms[3]), sizes[randoms[0]], isFragile[randoms[1]], driverTest));
+            return customer;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       throw new Exception("Could not generate Business customer");
+    }
 }

@@ -60,9 +60,11 @@ public  abstract class AbstractCustomer{
         return customerCode;
     }
     public void addNewParcel(Parcel parcel){
-        if(!parcels.contains(parcel))
+        if(parcels.contains(parcel))
+            System.out.println("Parcell already added!");
+        else
             parcels.add(parcel);
-        System.out.println("Parcell already added!");
+
     }
 
     @Override
